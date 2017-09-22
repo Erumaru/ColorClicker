@@ -148,12 +148,13 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
 
             usedTime+=mInterval;
             if (mInterval>500)
-                mInterval-=20;
+                mInterval-=25;
             if (mInterval>400 && mInterval<=500)
-                mInterval-=5;
-            if (mInterval>200 && mInterval<=400)
-                mInterval-=1;
+                mInterval-=10;
+            if (mInterval>250 && mInterval<=400)
+                mInterval-=2;
             mHandler.postDelayed(newOne, mInterval);
+            Log.d(TAG, "run: " + mInterval);
         }
     };
 
