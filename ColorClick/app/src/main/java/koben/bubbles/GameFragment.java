@@ -35,27 +35,18 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
     private Handler mHandler = new Handler(Looper.getMainLooper());
     public Random rand = new Random();
     public int randomChoose = 1, previous = 1;
-    ImageButton i_1;
-    ImageButton i_2;
-    ImageButton i_3;
-    ImageButton i_4;
+    ImageButton imageButtons[];
     TextView scores, start;
     Vibrator vibrator;
 
     void unsetAllViews() {
-        i_1.setVisibility(View.INVISIBLE);
-        i_2.setVisibility(View.INVISIBLE);
-        i_3.setVisibility(View.INVISIBLE);
-        i_4.setVisibility(View.INVISIBLE);
+        for (int i = 0; i < 4; i ++) imageButtons[i].setVisibility(View.INVISIBLE);
         scores.setVisibility(View.INVISIBLE);
         start.setVisibility(View.VISIBLE);
     }
 
     void setAllViews() {
-        i_1.setVisibility(View.VISIBLE);
-        i_2.setVisibility(View.VISIBLE);
-        i_3.setVisibility(View.VISIBLE);
-        i_4.setVisibility(View.VISIBLE);
+        for (int i = 0; i < 4; i ++) imageButtons[i].setVisibility(View.VISIBLE);
         scores.setVisibility(View.VISIBLE);
         start.setVisibility(View.INVISIBLE);
     }
@@ -88,10 +79,7 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
         mInterval = 800;
         randomChoose = 1;
         previous = 1;
-        i_1.setImageResource(R.drawable.state_relax);
-        i_2.setImageResource(R.drawable.state_relax);
-        i_3.setImageResource(R.drawable.state_relax);
-        i_4.setImageResource(R.drawable.state_relax);
+        for (int i = 0; i < 4; i ++) imageButtons[i].setImageResource(R.drawable.state_relax);
     }
 
     public void showScore() {
@@ -99,10 +87,7 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
     }
 
     public void loose() {
-        i_1.setImageResource(R.drawable.lose_state);
-        i_2.setImageResource(R.drawable.lose_state);
-        i_3.setImageResource(R.drawable.lose_state);
-        i_4.setImageResource(R.drawable.lose_state);
+        for (int i = 0; i < 4; i ++) imageButtons[i].setImageResource(R.drawable.lose_state);
         stopRepeatingTask();
         stopped = true;
         mHandler.postDelayed(goToLose, 1000);
@@ -116,40 +101,11 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
 
     public void onClick(View v) {
 
-        switch(v.getId()){
-            case R.id.im_1:
-                if (!stopped) {
-                    play(1);
-                    if (!check(1)) loose();
-                    showScore();
-                    vibrator.vibrate(100);
-                }
-                break;
-            case R.id.im_2:
-                if (!stopped) {
-                    play(2);
-                    if (!check(2)) loose();
-                    showScore();
-                    vibrator.vibrate(100);
-                }
-                break;
-            case R.id.im_3:
-                if (!stopped) {
-                    play(3);
-                    if (!check(3)) loose();
-                    showScore();
-                    vibrator.vibrate(100);
-                }
-                break;
-            case R.id.im_4:
-                if (!stopped) {
-                    play(4);
-                    if (!check(4)) loose();
-                    showScore();
-                    vibrator.vibrate(100);
-                }
-                break;
-        }
+        int index = getIndexOfTheButton(v.getId()) + 1;
+        play(index);
+        if (!check(index)) loose();
+        showScore();
+        vibrator.vibrate(100);
     }
 
     void showTime(int timer)
@@ -180,44 +136,16 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
     Runnable newOne = new Runnable() {
         @Override
         public void run() {
-            switch (randomChoose)
-            {
-                case 1:
-                    i_1.setImageResource(R.drawable.state_relax);
-                    break;
-                case 2:
-                    i_2.setImageResource(R.drawable.state_relax);
-                    break;
-                case 3:
-                    i_3.setImageResource(R.drawable.state_relax);
-                    break;
-                case 4:
-                    i_4.setImageResource(R.drawable.state_relax);
-                    break;
-            }
+            imageButtons[randomChoose - 1].setImageResource(R.drawable.state_relax);
             previous = randomChoose;
-            while (randomChoose==previous) {
+            while (randomChoose == previous) {
                 randomChoose = rand.nextInt(4) + 1;
             }
-            switch (randomChoose)
-            {
-                case 1:
-                    i_1.setImageResource(R.drawable.for_1);
-                    data.add(1);
-                    break;
-                case 2:
-                    i_2.setImageResource(R.drawable.for_2);
-                    data.add(2);
-                    break;
-                case 3:
-                    i_3.setImageResource(R.drawable.for_3);
-                    data.add(3);
-                    break;
-                case 4:
-                    i_4.setImageResource(R.drawable.for_4);
-                    data.add(4);
-                    break;
-            }
+            imageButtons[randomChoose - 1].setImageResource(getResources().
+                                getIdentifier("for_" + randomChoose, "drawable",
+                                     getActivity().getPackageName()));
+            data.add(randomChoose);
+
             usedTime+=mInterval;
             if (mInterval>500)
                 mInterval-=20;
@@ -247,20 +175,39 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
         return viewRoot;
     }
 
+    private int getIndexOfTheButton (int id) {
+        switch (id) {
+            case R.id.im_1:
+                return 0;
+            case R.id.im_2:
+                return 1;
+            case R.id.im_3:
+                return 2;
+            case R.id.im_4:
+                return 3;
+        }
+
+        return -1;
+    }
+
     private void init()
     {
         mp = new MediaPlayer[4];
         for (int i=0; i<4; i++)
             mp[i] = MediaPlayer.create(getActivity().getApplicationContext(),R.raw.for_click);
-        Log.i(TAG, "in init");
+
+        imageButtons = new ImageButton[4];
+
         data = new Vector<Integer>();
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         mHandler = new Handler();
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        i_1 = (ImageButton) viewRoot.findViewById(R.id.im_1);
-        i_2 = (ImageButton) viewRoot.findViewById(R.id.im_2);
-        i_3 = (ImageButton) viewRoot.findViewById(R.id.im_3);
-        i_4 = (ImageButton) viewRoot.findViewById(R.id.im_4);
+
+        for (int i = 1; i <= 4; i ++ ) {
+            int id = getResources().getIdentifier("im_" + i, "id", getActivity().getPackageName());
+            imageButtons[i - 1] = (ImageButton) viewRoot.findViewById(id);
+        }
+
         scores = (TextView) viewRoot.findViewById(R.id.textView);
         start = (TextView) viewRoot.findViewById(R.id.textView3);
         showScore();
@@ -268,10 +215,11 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ActionBar actionBar = getActivity().getActionBar();
         actionBar.hide();
-        i_1.setOnClickListener(this);
-        i_2.setOnClickListener(this);
-        i_3.setOnClickListener(this);
-        i_4.setOnClickListener(this);
+
+        for (int i = 0; i < 4; i ++) {
+            imageButtons[i].setOnClickListener(this);
+        }
+
         unsetAllViews();
         mHandler.postDelayed(startTimer,0);
     }
