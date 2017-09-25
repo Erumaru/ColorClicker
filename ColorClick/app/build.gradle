@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services' 
 
 android {
     compileSdkVersion 22
     buildToolsVersion '25.0.0'
 
     defaultConfig {
-        applicationId "koben.ColorClicker"
+        applicationId "codebusters.ColorClicker"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

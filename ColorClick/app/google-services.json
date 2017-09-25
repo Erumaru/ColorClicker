@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "274081905110",
+    "firebase_url": "https://colorclicker-29e5d.firebaseio.com",
+    "project_id": "colorclicker-29e5d",
+    "storage_bucket": "colorclicker-29e5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274081905110:android:d80d56052be6ee2f",
+        "android_client_info": {
+          "package_name": "codebusters.ColorClicker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "274081905110-nnsdcnk6c8fnhmmjjh51dspbjai63m2p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuG29OwYQrmjNseWdP8GMsxtm2RyzKIG8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
