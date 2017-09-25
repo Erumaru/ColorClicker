@@ -32,7 +32,6 @@ public class LoseFragment extends FragmentSwitcher implements OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         viewRoot = inflater.inflate(R.layout.fragment_lose, parent, false);
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         ButterKnife.bind(this, viewRoot);
 
         init();
@@ -47,10 +46,9 @@ public class LoseFragment extends FragmentSwitcher implements OnClickListener
     private void init()
     {
         tryAgainButton.setOnClickListener(this);
-        goMenuButton.setOnClickListener(this);
         showLastScore.setText("" + lastScore);
         int highScore = database.highScore();
-        if (highScore>=0)
+        if (highScore >= 0)
         {
             if (highScore < lastScore) {
                 database.update(lastScore, highScore);
@@ -75,41 +73,6 @@ public class LoseFragment extends FragmentSwitcher implements OnClickListener
                 GameFragment GF = new GameFragment();
                 switchFrag(GF);
                 break;
-            case R.id.goMenuButton:
-                MenuFragment MF = new MenuFragment();
-                switchFrag(MF);
-                break;
         }
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        init();
-    }
-
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop()
-    {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onStart()
-    {
-        super.onStart();
     }
 }

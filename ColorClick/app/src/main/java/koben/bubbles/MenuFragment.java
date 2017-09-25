@@ -52,9 +52,4 @@ public class MenuFragment extends FragmentSwitcher implements OnClickListener
 		}
 	}
 
-	@Override
-	public void onStart()
-	{
-		super.onStart();
-	}
 }

@@ -18,6 +18,8 @@ import java.util.Random;
 import java.util.Vector;
 
 import static koben.bubbles.MainActivity.mHandler;
+import static koben.bubbles.MainActivity.soundMode;
+import static koben.bubbles.MainActivity.vibrationMode;
 
 
 public class GameFragment extends FragmentSwitcher implements View.OnClickListener {
@@ -35,19 +37,19 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
     TextView scores, start;
     Vibrator vibrator;
 
-    void unsetAllViews() {
+    private void unsetAllViews() {
         for (int i = 0; i < 4; i ++) imageButtons[i].setVisibility(View.INVISIBLE);
         scores.setVisibility(View.INVISIBLE);
         start.setVisibility(View.VISIBLE);
     }
 
-    void setAllViews() {
+    private void setAllViews() {
         for (int i = 0; i < 4; i ++) imageButtons[i].setVisibility(View.VISIBLE);
         scores.setVisibility(View.VISIBLE);
         start.setVisibility(View.INVISIBLE);
     }
 
-    public boolean check(int currentButton) {
+    private boolean check(int currentButton) {
         if (score >= data.size()) return false;
         if (data.isEmpty()) return false;
         if (data.elementAt(score) == currentButton) {
@@ -67,7 +69,7 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
         }
     };
 
-    public void restart() {
+    private void restart() {
         score = 0;
         scores.setText("0");
         data.clear();
@@ -78,21 +80,27 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
         for (int i = 0; i < 4; i ++) imageButtons[i].setImageResource(R.drawable.state_relax);
     }
 
-    public void showScore() {
+    private void showScore() {
         scores.setText("" + score);
     }
 
-    public void loose() {
+    private void loose() {
         for (int i = 0; i < 4; i ++) imageButtons[i].setImageResource(R.drawable.lose_state);
         stopRepeatingTask();
         stopped = true;
         mHandler.postDelayed(goToLose, 1000);
     }
 
-    void play(int num)
+    private void play(int num)
     {
+        if (!soundMode) return;
         if (mp[num - 1].isPlaying()) mp[num - 1].stop();
         mp[num - 1].start();
+    }
+
+    private void vibrate() {
+        if (!vibrationMode) return;
+        vibrator.vibrate(100);
     }
 
     public void onClick(View v) {
@@ -101,10 +109,10 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
         play(index);
         if (!check(index)) loose();
         showScore();
-        vibrator.vibrate(100);
+        vibrate();
     }
 
-    void showTime(int timer)
+    private void showTime(int timer)
     {
         start.setText("" + timer);
     }
