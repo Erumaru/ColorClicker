@@ -19,6 +19,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static koben.bubbles.MainActivity.database;
+
 
 public class HistoryFragment extends FragmentSwitcher {
 
@@ -31,8 +33,8 @@ public class HistoryFragment extends FragmentSwitcher {
         viewRoot = inflater.inflate(R.layout.fragment_list, container, false);
         TextView showHighScore = (TextView) viewRoot.findViewById(R.id.showHighScore);
         showHighScore.setTextSize(90);
-        if (((MainActivity)getActivity()).database.highScore()>0) showHighScore.setText(""+((MainActivity)getActivity()).database.highScore());
-        else showHighScore.setText(""+0);
+        if (database.highScore() > 0) showHighScore.setText("" + database.highScore());
+        else showHighScore.setText("" + 0);
         return viewRoot;
     }
 

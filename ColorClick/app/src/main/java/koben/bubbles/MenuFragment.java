@@ -10,26 +10,26 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MenuFragment extends FragmentSwitcher implements OnClickListener
 {
+    @BindView(R.id.settingsButton) Button settingsButton;
+    @BindView(R.id.historyButton) Button historyButton;
+    @BindView(R.id.newGameButton) Button newGameButton;
+
 	private View viewRoot;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
 	{
 		viewRoot = inflater.inflate(R.layout.fragment_menu, parent, false);
-		getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		init();
+        ButterKnife.bind(this, viewRoot);
+        settingsButton.setOnClickListener(this);
+        historyButton.setOnClickListener(this);
+        newGameButton.setOnClickListener(this);
 
 		return viewRoot;
-	}
-
-
-	private void init()
-	{
-		Button newGameButton = (Button) viewRoot.findViewById(R.id.newGameButton);
-		newGameButton.setOnClickListener(this);
-		Button historyButton = (Button) viewRoot.findViewById(R.id.historyButton);
-		historyButton.setOnClickListener(this);
 	}
 
 	@Override
@@ -45,36 +45,11 @@ public class MenuFragment extends FragmentSwitcher implements OnClickListener
 				HistoryFragment LF = new HistoryFragment();
 				switchFrag(LF);
 				break;
+            case R.id.settingsButton:
+                SettingsFragment SF = new SettingsFragment();
+                switchFrag(SF);
+                break;
 		}
-	}
-
-	@Override
-	public void onResume()
-	{
-		Log.i(TAG, "onResume");
-		super.onResume();
-		init();
-	}
-
-	@Override
-	public void onPause()
-	{
-		super.onPause();
-		Log.i(TAG, "onPause");
-	}
-
-	@Override
-	public void onStop()
-	{
-		super.onStop();
-		Log.i(TAG, "onStop");
-	}
-
-	@Override
-	public void onDestroy()
-	{
-		super.onDestroy();
-		Log.i(TAG, "onDestroy");
 	}
 
 	@Override

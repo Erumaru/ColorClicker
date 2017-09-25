@@ -12,25 +12,39 @@
         android:background="@drawable/game_fragment_background">
 
         <Button
+            android:id="@+id/newGameButton"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="New Game"
-            android:id="@+id/newGameButton"
-            android:background="@drawable/button"
             android:layout_below="@+id/imageView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button"
+            android:text="New Game"
+            android:textSize="15sp" />
 
         <Button
+            android:id="@+id/settingsButton"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="High Score"
-            android:id="@+id/historyButton"
+            android:layout_alignLeft="@+id/historyButton"
+            android:layout_alignStart="@+id/historyButton"
+            android:layout_below="@+id/historyButton"
+            android:layout_marginTop="20dp"
             android:background="@drawable/button"
-            android:layout_below="@+id/newGameButton"
+            android:text="Settings"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/historyButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/newGameButton"
             android:layout_alignStart="@+id/newGameButton"
-            android:layout_marginTop="20dp" />
+            android:layout_below="@+id/newGameButton"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button"
+            android:text="High Score"
+            android:textSize="15sp" />
 
         <ImageView
             android:layout_width="120dp"

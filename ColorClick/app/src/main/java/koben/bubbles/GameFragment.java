@@ -1,12 +1,8 @@
 package koben.bubbles;
 
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,24 +11,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Random;
 import java.util.Vector;
 
+import static koben.bubbles.MainActivity.mHandler;
+
 
 public class GameFragment extends FragmentSwitcher implements View.OnClickListener {
 
+    private static final String TAG = "GameFragment";
     MediaPlayer mp[];
     private View viewRoot;
     boolean stopped = true;
     Vector<Integer> data;
     int mInterval = 800;
     int score = 0, startTime = 3, usedTime = 0;
-    private Handler mHandler = new Handler(Looper.getMainLooper());
     public Random rand = new Random();
     public int randomChoose = 1, previous = 1;
     ImageButton imageButtons[];
@@ -55,7 +51,7 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
         if (score >= data.size()) return false;
         if (data.isEmpty()) return false;
         if (data.elementAt(score) == currentButton) {
-            score++;
+            score ++;
             return true;
         }
         return false;
@@ -95,8 +91,8 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
 
     void play(int num)
     {
-        if (mp[num-1].isPlaying()) mp[num-1].stop();
-        mp[num-1].start();
+        if (mp[num - 1].isPlaying()) mp[num - 1].stop();
+        mp[num - 1].start();
     }
 
     public void onClick(View v) {
@@ -110,18 +106,18 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
 
     void showTime(int timer)
     {
-        start.setText(""+timer);
+        start.setText("" + timer);
     }
 
     Runnable startTimer = new Runnable() {
         @Override
         public void run() {
             showTime(startTime);
-            if (startTime>0)
+            if (startTime > 0)
             {
-                startTime--;
+                startTime --;
                 mHandler.removeCallbacks(startTimer);
-                mHandler.postDelayed(startTimer,1000);
+                mHandler.postDelayed(startTimer, 1000);
             }
             else
             {
@@ -146,20 +142,19 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
                                      getActivity().getPackageName()));
             data.add(randomChoose);
 
-            usedTime+=mInterval;
-            if (mInterval>500)
-                mInterval-=25;
-            if (mInterval>400 && mInterval<=500)
-                mInterval-=10;
-            if (mInterval>250 && mInterval<=400)
-                mInterval-=2;
+            usedTime += mInterval;
+            if (mInterval > 500)
+                mInterval -= 25;
+            if (mInterval > 400 && mInterval <= 500)
+                mInterval -= 10;
+            if (mInterval > 250 && mInterval <= 400)
+                mInterval -= 2;
             mHandler.postDelayed(newOne, mInterval);
-            Log.d(TAG, "run: " + mInterval);
         }
     };
 
     void startRepeatingTask() {
-        mHandler.postDelayed(newOne,mInterval);
+        mHandler.postDelayed(newOne, mInterval);
     }
 
     void stopRepeatingTask() {
@@ -191,20 +186,17 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
         return -1;
     }
 
-    private void init()
-    {
+    private void init() {
         mp = new MediaPlayer[4];
-        for (int i=0; i<4; i++)
-            mp[i] = MediaPlayer.create(getActivity().getApplicationContext(),R.raw.for_click);
+        for (int i = 0; i < 4; i++)
+            mp[i] = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.for_click);
 
         imageButtons = new ImageButton[4];
 
         data = new Vector<Integer>();
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-        mHandler = new Handler();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        for (int i = 1; i <= 4; i ++ ) {
+        for (int i = 1; i <= 4; i++) {
             int id = getResources().getIdentifier("im_" + i, "id", getActivity().getPackageName());
             imageButtons[i - 1] = (ImageButton) viewRoot.findViewById(id);
         }
@@ -212,54 +204,13 @@ public class GameFragment extends FragmentSwitcher implements View.OnClickListen
         scores = (TextView) viewRoot.findViewById(R.id.textView);
         start = (TextView) viewRoot.findViewById(R.id.textView3);
         showScore();
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ActionBar actionBar = getActivity().getActionBar();
-        actionBar.hide();
 
-        for (int i = 0; i < 4; i ++) {
+        for (int i = 0; i < 4; i++) {
             imageButtons[i].setOnClickListener(this);
         }
 
         unsetAllViews();
-        mHandler.postDelayed(startTimer,0);
+        mHandler.postDelayed(startTimer, 0);
     }
-
-    @Override
-    public void onResume()
-    {
-        Log.i(TAG, "onResume");
-        super.onResume();
-        init();
-    }
-
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        Log.i(TAG, "onPause");
-    }
-
-    @Override
-    public void onStop()
-    {
-        super.onStop();
-        Log.i(TAG, "onStop");
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
-
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
-        Log.i(TAG, "onDestroy");
-    }
-
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-    }
-
 
 }

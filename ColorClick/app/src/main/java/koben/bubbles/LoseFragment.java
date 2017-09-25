@@ -13,8 +13,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static koben.bubbles.MainActivity.database;
+
 public class LoseFragment extends FragmentSwitcher implements OnClickListener
 {
+    @BindView(R.id.tryAgainButton) Button tryAgainButton;
+    @BindView(R.id.goMenuButton) Button goMenuButton;
+    @BindView(R.id.loseText) TextView showLastScore;
+
     private View viewRoot;
     private int lastScore;
     private double apm;
@@ -24,6 +33,7 @@ public class LoseFragment extends FragmentSwitcher implements OnClickListener
     {
         viewRoot = inflater.inflate(R.layout.fragment_lose, parent, false);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        ButterKnife.bind(this, viewRoot);
 
         init();
 
@@ -36,17 +46,14 @@ public class LoseFragment extends FragmentSwitcher implements OnClickListener
 
     private void init()
     {
-        Button tryAgainButton = (Button) viewRoot.findViewById(R.id.tryAgainButton);
         tryAgainButton.setOnClickListener(this);
-        Button goMenuButton = (Button) viewRoot.findViewById(R.id.goMenuButton);
         goMenuButton.setOnClickListener(this);
-        TextView showLastScore  = (TextView) viewRoot.findViewById(R.id.loseText);
         showLastScore.setText("" + lastScore);
-        int highScore = ((MainActivity)getActivity()).database.highScore();
+        int highScore = database.highScore();
         if (highScore>=0)
         {
             if (highScore < lastScore) {
-                ((MainActivity) getActivity()).database.update(lastScore, highScore);
+                database.update(lastScore, highScore);
             }
 
         }
@@ -54,8 +61,8 @@ public class LoseFragment extends FragmentSwitcher implements OnClickListener
         {
             ContentValues cv = new ContentValues();
             cv.put("score", lastScore);
-            SQLiteDatabase db = ((MainActivity) getActivity()).database.getWritableDatabase();
-            db.insert("mytable",null,cv);
+            SQLiteDatabase db = database.getWritableDatabase();
+            db.insert("mytable", null, cv);
         }
     }
 
