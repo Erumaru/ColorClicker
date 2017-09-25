@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services' 
 
 android {
     compileSdkVersion 22
@@ -22,10 +21,24 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Android support
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.android.support:support-v4:22.1.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    //Butter Knife
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
+    //Google
+    compile 'com.google.firebase:firebase-core:11.4.0'
+    compile 'com.google.firebase:firebase-auth:11.4.0'
+    compile 'com.google.firebase:firebase-database:11.4.0'
+
+
+
+
 }
+
+apply plugin: 'com.google.gms.google-services'
