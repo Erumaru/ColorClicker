@@ -112,7 +112,8 @@
     <orderEntry type="library" exported="" name="cardview-v7-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-core-ui-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-media-compat-26.0.1" level="project" />
-    <orderEntry type="library" exported="" name="play-services-auth-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="play-services-auth-11.4.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-auth-api-phone-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-core-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="constraint-layout-1.1.0-beta1" level="project" />
@@ -133,7 +134,7 @@
     <orderEntry type="library" exported="" name="support-v4-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-fragment-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-26.0.1" level="project" />
-    <orderEntry type="library" exported="" name="play-services-auth-base-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="play-services-auth-base-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-ui-auth-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="firebase-analytics-11.4.0" level="project" />

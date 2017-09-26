@@ -11,6 +11,9 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.security.PublicKey;
 
 
@@ -20,6 +23,8 @@ public class MainActivity extends FragmentActivity {
     public static Handler mHandler = new Handler(Looper.getMainLooper());
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor sharedPreferencesEditor;
+    public static FirebaseAuth auth = FirebaseAuth.getInstance();
+    public static final int RC_SIGN_IN = 777;
     public static final String VIBRATION_MODE = "VIBRATION_MODE";
     public static final String SOUND_MODE = "SOUND_MODE";
     public static boolean vibrationMode;
