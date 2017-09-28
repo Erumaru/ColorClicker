@@ -23,6 +23,7 @@ import static codebusters.ColorClicker.MainActivity.RC_SIGN_IN;
 import static codebusters.ColorClicker.MainActivity.auth;
 import static codebusters.ColorClicker.MainActivity.databaseReference;
 import static codebusters.ColorClicker.MainActivity.firebaseDatabase;
+import static codebusters.ColorClicker.MainActivity.isInternetAvailable;
 import static codebusters.ColorClicker.MainActivity.sharedPreferences;
 import static codebusters.ColorClicker.MainActivity.sharedPreferencesEditor;
 
@@ -64,21 +65,26 @@ public class MenuFragment extends FragmentSwitcher implements OnClickListener
 				switchFrag(GF);
 				break;
 			case R.id.historyButton:
-			    if (auth.getCurrentUser() != null) {
-				    HistoryFragment LF = new HistoryFragment();
-				    switchFrag(LF);
-			    }
-			    else {
-                    startActivityForResult(
-                            AuthUI.getInstance()
-                                    .createSignInIntentBuilder()
-                                    .setAvailableProviders(
-                                            Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-                                                    new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
-                                    .setIsSmartLockEnabled(false)
-                                    .setTheme(R.style.NoActionBarFullscreen)
-                                    .build(),
-                            RC_SIGN_IN);
+			    if (isInternetAvailable()) {
+                    if (auth.getCurrentUser() != null) {
+                        HistoryFragment LF = new HistoryFragment();
+                        switchFrag(LF);
+                    } else {
+                        startActivityForResult(
+                                AuthUI.getInstance()
+                                        .createSignInIntentBuilder()
+                                        .setAvailableProviders(
+                                                Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                                                        new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
+                                        .setIsSmartLockEnabled(false)
+                                        .setTheme(R.style.NoActionBarFullscreen)
+                                        .build(),
+                                RC_SIGN_IN);
+                    }
+                }
+                else {
+                    Toast.makeText(getActivity(), R.string.no_internet_access,
+                            Toast.LENGTH_LONG).show();
                 }
 				break;
             case R.id.settingsButton:
@@ -100,7 +106,8 @@ public class MenuFragment extends FragmentSwitcher implements OnClickListener
                 switchFrag(LF);
                 return;
             } else {
-                Toast.makeText(getActivity(), "Something went wrong, try later", Toast.LENGTH_LONG);
+                Toast.makeText(getActivity(), R.string.no_internet_access,
+                        Toast.LENGTH_LONG).show();
             }
             break;
         }

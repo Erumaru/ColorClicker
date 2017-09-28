@@ -2,15 +2,20 @@ package codebusters.ColorClicker;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.net.InetAddress;
 
 
 public class MainActivity extends FragmentActivity {
@@ -26,6 +31,7 @@ public class MainActivity extends FragmentActivity {
     public static final String SOUND_MODE = "SOUND_MODE";
     public static final String MAX_SCORE = "MAX_SCORE";
     public static final String FIRST_TIME = "FIRST_TIME";
+    public static Context context;
     public static boolean vibrationMode;
     public static boolean soundMode;
 
@@ -34,6 +40,8 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        context = getApplicationContext();
 
         //Initializing db
         if (auth.getCurrentUser() != null) databaseReference =
@@ -67,8 +75,16 @@ public class MainActivity extends FragmentActivity {
         super.onBackPressed();
     }
 
-    public void backButton (View view) {
+    public void backButton(View view) {
         onBackPressed();
+    }
+
+    public static boolean isInternetAvailable() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 
 }

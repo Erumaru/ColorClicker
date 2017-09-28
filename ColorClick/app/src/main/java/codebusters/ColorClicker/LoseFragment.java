@@ -8,9 +8,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static codebusters.ColorClicker.MainActivity.firebaseDatabase;
+import static codebusters.ColorClicker.MainActivity.isInternetAvailable;
 import static codebusters.ColorClicker.Score.EMPTY_AVATAR;
 import static codebusters.ColorClicker.Score.PLAYER_AVATAR;
 import static codebusters.ColorClicker.Score.PLAYER_NAME;
@@ -52,16 +60,39 @@ public class LoseFragment extends FragmentSwitcher implements OnClickListener
         int maxScore = max(sharedPreferences.getInt(MAX_SCORE, 0), lastScore);
         sharedPreferencesEditor.putInt(MAX_SCORE, maxScore);
         sharedPreferencesEditor.commit();
-        if (auth.getCurrentUser() != null) {
-            databaseReference.child(PLAYER_SCORE).setValue(String.valueOf(maxScore));
-            databaseReference.child(PLAYER_NAME).setValue(auth.getCurrentUser().getDisplayName());
-            if (auth.getCurrentUser().getPhotoUrl() != null) databaseReference.child(PLAYER_AVATAR).
-                    setValue(auth.getCurrentUser().getPhotoUrl().toString());
-            else databaseReference.child(PLAYER_AVATAR).setValue(EMPTY_AVATAR);
+        if (isInternetAvailable() && auth.getCurrentUser() != null) {
+            firebaseDatabase.getReference(auth.getCurrentUser().getUid())
+                            .addListenerForSingleValueEvent(valueEventListener);
+
         }
         tryAgainButton.setOnClickListener(this);
         showLastScore.setText("" + lastScore);
     }
+
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            HashMap<String, Object> map = (HashMap<String, Object>) dataSnapshot.getValue();
+
+            //update max score in firebase database
+            databaseReference.child(PLAYER_SCORE).
+                    setValue(String.valueOf(max(Integer.valueOf(map.get(PLAYER_SCORE).toString()),
+                            sharedPreferences.getInt(MAX_SCORE, 0))));
+
+            //update name
+            databaseReference.child(PLAYER_NAME).setValue(auth.getCurrentUser().getDisplayName());
+
+            //update avatar
+            if (auth.getCurrentUser().getPhotoUrl() != null) databaseReference.child(PLAYER_AVATAR).
+                    setValue(auth.getCurrentUser().getPhotoUrl().toString());
+            else databaseReference.child(PLAYER_AVATAR).setValue(EMPTY_AVATAR);
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     @Override
     public void onClick(View v)
