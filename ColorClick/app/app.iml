@@ -116,22 +116,25 @@
     <orderEntry type="library" exported="" name="play-services-auth-api-phone-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-core-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-26.0.1" level="project" />
+    <orderEntry type="library" exported="" name="glide-4.1.1" level="project" />
     <orderEntry type="library" exported="" name="constraint-layout-1.1.0-beta1" level="project" />
     <orderEntry type="library" exported="" name="firebase-iid-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-core-utils-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="constraint-layout-solver-1.1.0-beta1" level="project" />
+    <orderEntry type="library" exported="" name="annotations-4.1.1" level="project" />
     <orderEntry type="library" exported="" name="firebase-auth-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-basement-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="transition-26.0.1" level="project" />
+    <orderEntry type="library" exported="" name="gifdecoder-4.1.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-base-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-annotations-8.8.1" level="project" />
     <orderEntry type="library" exported="" name="customtabs-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-compat-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="firebase-database-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-database-connection-11.4.0" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-26.0.1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-26.0.2" level="project" />
     <orderEntry type="library" exported="" name="support-fragment-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-auth-base-11.4.0" level="project" />
@@ -139,6 +142,7 @@
     <orderEntry type="library" exported="" name="appcompat-v7-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="firebase-analytics-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-analytics-impl-11.4.0" level="project" />
+    <orderEntry type="library" exported="" name="disklrucache-4.1.1" level="project" />
     <orderEntry type="library" exported="" name="design-26.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-tasks-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-8.8.1" level="project" />

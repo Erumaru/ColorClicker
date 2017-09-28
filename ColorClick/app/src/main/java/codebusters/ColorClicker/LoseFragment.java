@@ -11,6 +11,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static codebusters.ColorClicker.Score.EMPTY_AVATAR;
+import static codebusters.ColorClicker.Score.PLAYER_AVATAR;
+import static codebusters.ColorClicker.Score.PLAYER_NAME;
+import static codebusters.ColorClicker.Score.PLAYER_SCORE;
 import static java.lang.Math.max;
 import static codebusters.ColorClicker.MainActivity.MAX_SCORE;
 import static codebusters.ColorClicker.MainActivity.auth;
@@ -49,8 +53,11 @@ public class LoseFragment extends FragmentSwitcher implements OnClickListener
         sharedPreferencesEditor.putInt(MAX_SCORE, maxScore);
         sharedPreferencesEditor.commit();
         if (auth.getCurrentUser() != null) {
-            databaseReference.child("score").setValue(maxScore);
-            databaseReference.child("name").setValue(auth.getCurrentUser().getDisplayName());
+            databaseReference.child(PLAYER_SCORE).setValue(String.valueOf(maxScore));
+            databaseReference.child(PLAYER_NAME).setValue(auth.getCurrentUser().getDisplayName());
+            if (auth.getCurrentUser().getPhotoUrl() != null) databaseReference.child(PLAYER_AVATAR).
+                    setValue(auth.getCurrentUser().getPhotoUrl().toString());
+            else databaseReference.child(PLAYER_AVATAR).setValue(EMPTY_AVATAR);
         }
         tryAgainButton.setOnClickListener(this);
         showLastScore.setText("" + lastScore);

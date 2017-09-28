@@ -51,7 +51,7 @@ public class MainActivity extends FragmentActivity {
 
             firstFragment.setArguments(getIntent().getExtras());
 
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_root, firstFragment).commit();
+            getFragmentManager().beginTransaction().add(R.id.fragment_container_root, firstFragment).commit();
         }
     }
 

@@ -23,6 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static codebusters.ColorClicker.MainActivity.firebaseDatabase;
+import static codebusters.ColorClicker.Score.PLAYER_AVATAR;
+import static codebusters.ColorClicker.Score.PLAYER_NAME;
+import static codebusters.ColorClicker.Score.PLAYER_SCORE;
 
 
 public class HistoryFragment extends FragmentSwitcher {
@@ -47,7 +50,7 @@ public class HistoryFragment extends FragmentSwitcher {
 
         layoutManager = new LinearLayoutManager(getActivity());
         scoresList.setLayoutManager(layoutManager);
-        scoresAdapter = new ScoresAdapter(scores);
+        scoresAdapter = new ScoresAdapter(this, scores);
         scoresList.setAdapter(scoresAdapter);
 
         return viewRoot;
@@ -58,9 +61,10 @@ public class HistoryFragment extends FragmentSwitcher {
         public void onDataChange(DataSnapshot dataSnapshot) {
             if (!dataSnapshot.exists()) return;
             for (DataSnapshot child: dataSnapshot.getChildren()) {
-                HashMap<String, Object> map = (HashMap<String, Object>) child.getValue();
-                Score score = new Score(map.get("name").toString(),
-                        Integer.valueOf(map.get("score").toString()), "");
+                HashMap<String, String> map = (HashMap<String, String>) child.getValue();
+                Score score = new Score(map.get(PLAYER_NAME),
+                                        map.get(PLAYER_SCORE),
+                                        map.get(PLAYER_AVATAR));
                 scores.add(score);
             }
             scoresAdapter.notifyDataSetChanged();

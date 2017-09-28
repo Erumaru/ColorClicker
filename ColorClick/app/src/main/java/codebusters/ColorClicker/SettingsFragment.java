@@ -18,7 +18,7 @@ import static codebusters.ColorClicker.MainActivity.soundMode;
 import static codebusters.ColorClicker.MainActivity.vibrationMode;
 
 
-public class SettingsFragment extends Fragment implements View.OnClickListener{
+public class SettingsFragment extends FragmentSwitcher implements View.OnClickListener{
 
 
     @BindView(R.id.soundBoolean) CheckBox soundBoolean;

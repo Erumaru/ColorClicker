@@ -2,9 +2,9 @@ package codebusters.ColorClicker;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +23,7 @@ public class FragmentSwitcher extends Fragment
 
         con = getActivity().getApplicationContext();
 
-        fm = getActivity().getSupportFragmentManager();
+        fm = getActivity().getFragmentManager();
     }
 
     @Override

@@ -4,14 +4,20 @@ package codebusters.ColorClicker;
  * Created by Erumaru on 28.09.17.
  */
 
+
 public class Score {
+    public static final String PLAYER_NAME = "PLAYER_NAME";
+    public static final String PLAYER_SCORE = "PLAYER_SCORE";
+    public static final String PLAYER_AVATAR = "PLAYER_AVATAR";
+    public static final String EMPTY_AVATAR = "EMPTY_AVATAR";
+
     private String name;
-    private int scores;
+    private String scores;
     private String photoUrl;
 
     public Score () {}
 
-    public Score (String name, int scores, String photoUrl) {
+    public Score (String name, String scores, String photoUrl) {
         this.name = name;
         this.scores = scores;
         this.photoUrl = photoUrl;
@@ -25,11 +31,11 @@ public class Score {
         this.name = name;
     }
 
-    public int getScores() {
+    public String getScores() {
         return scores;
     }
 
-    public void setScores(int scores) {
+    public void setScores(String scores) {
         this.scores = scores;
     }
 

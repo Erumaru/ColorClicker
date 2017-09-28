@@ -87,7 +87,7 @@ public class MenuFragment extends FragmentSwitcher implements OnClickListener
                 switchFrag(LF);
                 return;
             } else {
-                Toast.makeText(getContext(), "Something went wrong, try later", Toast.LENGTH_LONG);
+                Toast.makeText(getActivity(), "Something went wrong, try later", Toast.LENGTH_LONG);
             }
             break;
         }

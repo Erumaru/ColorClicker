@@ -1,11 +1,14 @@
 package codebusters.ColorClicker;
 
+import android.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
@@ -17,11 +20,14 @@ import butterknife.ButterKnife;
  */
 
 public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ViewHolder> {
-    List<Score> scores;
+    private static List<Score> scores;
+    private Fragment fragment;
 
 
-    public ScoresAdapter(List<Score> scores) {
+
+    public ScoresAdapter(Fragment fragment, List<Score> scores) {
         this.scores = scores;
+        this.fragment = fragment;
     }
 
     @Override
@@ -38,7 +44,14 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ViewHolder
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Score score = scores.get(position);
         holder.playerName.setText(score.getName());
-        holder.playerScores.setText(String.valueOf(score.getScores()));
+        holder.playerScores.setText(score.getScores());
+
+        if (score.getPhotoUrl() != Score.EMPTY_AVATAR) {
+            GlideApp.with(fragment.getActivity())
+                    .load(score.getPhotoUrl())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.playerAvatar);
+        }
     }
 
     @Override
