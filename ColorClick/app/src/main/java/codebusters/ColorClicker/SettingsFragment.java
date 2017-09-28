@@ -1,6 +1,5 @@
-package koben.bubbles;
+package codebusters.ColorClicker;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,12 +11,11 @@ import android.widget.CheckBox;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static koben.bubbles.MainActivity.SOUND_MODE;
-import static koben.bubbles.MainActivity.VIBRATION_MODE;
-import static koben.bubbles.MainActivity.sharedPreferences;
-import static koben.bubbles.MainActivity.sharedPreferencesEditor;
-import static koben.bubbles.MainActivity.soundMode;
-import static koben.bubbles.MainActivity.vibrationMode;
+import static codebusters.ColorClicker.MainActivity.SOUND_MODE;
+import static codebusters.ColorClicker.MainActivity.VIBRATION_MODE;
+import static codebusters.ColorClicker.MainActivity.sharedPreferencesEditor;
+import static codebusters.ColorClicker.MainActivity.soundMode;
+import static codebusters.ColorClicker.MainActivity.vibrationMode;
 
 
 public class SettingsFragment extends Fragment implements View.OnClickListener{

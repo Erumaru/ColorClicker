@@ -1,11 +1,6 @@
-package koben.bubbles;
+package codebusters.ColorClicker;
 
-import android.content.ContentValues;
-import android.content.pm.ActivityInfo;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +11,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static koben.bubbles.MainActivity.database;
+import static java.lang.Math.max;
+import static codebusters.ColorClicker.MainActivity.MAX_SCORE;
+import static codebusters.ColorClicker.MainActivity.auth;
+import static codebusters.ColorClicker.MainActivity.databaseReference;
+import static codebusters.ColorClicker.MainActivity.sharedPreferences;
+import static codebusters.ColorClicker.MainActivity.sharedPreferencesEditor;
 
 public class LoseFragment extends FragmentSwitcher implements OnClickListener
 {
@@ -45,23 +45,15 @@ public class LoseFragment extends FragmentSwitcher implements OnClickListener
 
     private void init()
     {
+        int maxScore = max(sharedPreferences.getInt(MAX_SCORE, 0), lastScore);
+        sharedPreferencesEditor.putInt(MAX_SCORE, maxScore);
+        sharedPreferencesEditor.commit();
+        if (auth.getCurrentUser() != null) {
+            databaseReference.child("score").setValue(maxScore);
+            databaseReference.child("name").setValue(auth.getCurrentUser().getDisplayName());
+        }
         tryAgainButton.setOnClickListener(this);
         showLastScore.setText("" + lastScore);
-        int highScore = database.highScore();
-        if (highScore >= 0)
-        {
-            if (highScore < lastScore) {
-                database.update(lastScore, highScore);
-            }
-
-        }
-        else
-        {
-            ContentValues cv = new ContentValues();
-            cv.put("score", lastScore);
-            SQLiteDatabase db = database.getWritableDatabase();
-            db.insert("mytable", null, cv);
-        }
     }
 
     @Override

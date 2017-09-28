@@ -1,19 +1,15 @@
-package koben.bubbles;
+package codebusters.ColorClicker;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 
 import java.util.Arrays;
@@ -22,8 +18,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.app.Activity.RESULT_OK;
-import static koben.bubbles.MainActivity.RC_SIGN_IN;
-import static koben.bubbles.MainActivity.auth;
+import static codebusters.ColorClicker.MainActivity.RC_SIGN_IN;
+import static codebusters.ColorClicker.MainActivity.auth;
+import static codebusters.ColorClicker.MainActivity.databaseReference;
+import static codebusters.ColorClicker.MainActivity.firebaseDatabase;
 
 public class MenuFragment extends FragmentSwitcher implements OnClickListener
 {
@@ -83,13 +81,12 @@ public class MenuFragment extends FragmentSwitcher implements OnClickListener
             case RC_SIGN_IN:
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
-            // Successfully signed in
             if (resultCode == RESULT_OK) {
+                databaseReference = firebaseDatabase.getReference(auth.getCurrentUser().getUid());
                 HistoryFragment LF = new HistoryFragment();
                 switchFrag(LF);
                 return;
             } else {
-                // Sign in failed
                 Toast.makeText(getContext(), "Something went wrong, try later", Toast.LENGTH_LONG);
             }
             break;

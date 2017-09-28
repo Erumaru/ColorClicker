@@ -1,4 +1,4 @@
-package koben.bubbles.util;
+package codebusters.ColorClicker.util;
 
 import android.app.Activity;
 import android.view.View;

@@ -1,32 +1,30 @@
-package koben.bubbles;
+package codebusters.ColorClicker;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.view.WindowManager;
 
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.security.PublicKey;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MainActivity extends FragmentActivity {
 
-    public static Database database;
     public static Handler mHandler = new Handler(Looper.getMainLooper());
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor sharedPreferencesEditor;
     public static FirebaseAuth auth = FirebaseAuth.getInstance();
+    public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    public static DatabaseReference databaseReference;
     public static final int RC_SIGN_IN = 777;
     public static final String VIBRATION_MODE = "VIBRATION_MODE";
     public static final String SOUND_MODE = "SOUND_MODE";
+    public static final String MAX_SCORE = "MAX_SCORE";
     public static boolean vibrationMode;
     public static boolean soundMode;
 
@@ -35,11 +33,16 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        database = new Database(this);
+
+        //Initializing db
+        if (auth.getCurrentUser() != null) databaseReference =
+                firebaseDatabase.getReference(auth.getCurrentUser().getUid());
+        //Initializing modes
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
         sharedPreferencesEditor = sharedPreferences.edit();
         vibrationMode = sharedPreferences.getBoolean(VIBRATION_MODE, true);
         soundMode = sharedPreferences.getBoolean(SOUND_MODE, true);
+
         if (findViewById(R.id.fragment_container_root) != null) {
             if (savedInstanceState != null)
                 return;

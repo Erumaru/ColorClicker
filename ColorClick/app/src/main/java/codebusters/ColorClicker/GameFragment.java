@@ -1,13 +1,10 @@
-package koben.bubbles;
+package codebusters.ColorClicker;
 
 
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +14,9 @@ import android.widget.TextView;
 import java.util.Random;
 import java.util.Vector;
 
-import static koben.bubbles.MainActivity.mHandler;
-import static koben.bubbles.MainActivity.soundMode;
-import static koben.bubbles.MainActivity.vibrationMode;
+import static codebusters.ColorClicker.MainActivity.mHandler;
+import static codebusters.ColorClicker.MainActivity.soundMode;
+import static codebusters.ColorClicker.MainActivity.vibrationMode;
 
 
 public class GameFragment extends FragmentSwitcher implements View.OnClickListener {
