@@ -64,6 +64,7 @@ public class MenuFragment extends FragmentSwitcher implements OnClickListener
                                             Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
                                                     new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
                                     .setIsSmartLockEnabled(false)
+                                    .setTheme(R.style.NoActionBarFullscreen)
                                     .build(),
                             RC_SIGN_IN);
                 }
