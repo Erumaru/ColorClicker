@@ -18,16 +18,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.app.Activity.RESULT_OK;
+import static codebusters.ColorClicker.MainActivity.FIRST_TIME;
 import static codebusters.ColorClicker.MainActivity.RC_SIGN_IN;
 import static codebusters.ColorClicker.MainActivity.auth;
 import static codebusters.ColorClicker.MainActivity.databaseReference;
 import static codebusters.ColorClicker.MainActivity.firebaseDatabase;
+import static codebusters.ColorClicker.MainActivity.sharedPreferences;
+import static codebusters.ColorClicker.MainActivity.sharedPreferencesEditor;
 
 public class MenuFragment extends FragmentSwitcher implements OnClickListener
 {
     @BindView(R.id.settingsButton) Button settingsButton;
     @BindView(R.id.historyButton) Button historyButton;
     @BindView(R.id.newGameButton) Button newGameButton;
+
+    private static final String TAG = "MenuFragment";
 
 	private View viewRoot;
 	@Override
@@ -39,8 +44,15 @@ public class MenuFragment extends FragmentSwitcher implements OnClickListener
         historyButton.setOnClickListener(this);
         newGameButton.setOnClickListener(this);
 
+        if (isFirstTime()) showInstructionDialog();
+
 		return viewRoot;
 	}
+
+	private void showInstructionDialog () {
+        InstructionDialog instructionDialog = new InstructionDialog();
+        instructionDialog.show(getFragmentManager(), TAG);
+    }
 
 	@Override
 	public void onClick(View v)
@@ -92,6 +104,13 @@ public class MenuFragment extends FragmentSwitcher implements OnClickListener
             }
             break;
         }
+    }
+
+    private boolean isFirstTime() {
+        if (sharedPreferences.contains(FIRST_TIME)) return false;
+        sharedPreferencesEditor.putBoolean(FIRST_TIME, true);
+        sharedPreferencesEditor.commit();
+        return true;
     }
 
 }

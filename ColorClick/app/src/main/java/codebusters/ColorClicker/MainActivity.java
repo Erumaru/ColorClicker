@@ -25,6 +25,7 @@ public class MainActivity extends FragmentActivity {
     public static final String VIBRATION_MODE = "VIBRATION_MODE";
     public static final String SOUND_MODE = "SOUND_MODE";
     public static final String MAX_SCORE = "MAX_SCORE";
+    public static final String FIRST_TIME = "FIRST_TIME";
     public static boolean vibrationMode;
     public static boolean soundMode;
 

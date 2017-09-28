@@ -62,6 +62,6 @@ public class Score implements Comparable<Score> {
 
     @Override
     public int compareTo(@NonNull Score score) {
-        return score.scores.compareTo(scores);
+        return Integer.valueOf(score.scores).compareTo(Integer.valueOf(scores));
     }
 }

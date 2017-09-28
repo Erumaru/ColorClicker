@@ -63,6 +63,9 @@ public class HistoryFragment extends FragmentSwitcher {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             if (!dataSnapshot.exists()) return;
+
+            scores.clear();
+
             for (DataSnapshot child: dataSnapshot.getChildren()) {
                 HashMap<String, String> map = (HashMap<String, String>) child.getValue();
                 Score score = new Score(map.get(PLAYER_NAME),
