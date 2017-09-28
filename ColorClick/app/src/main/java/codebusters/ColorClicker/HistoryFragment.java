@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,17 +32,19 @@ import static codebusters.ColorClicker.Score.PLAYER_SCORE;
 public class HistoryFragment extends FragmentSwitcher {
 
     private View viewRoot;
+
     @BindView(R.id.scoresList)
     RecyclerView scoresList;
-    RecyclerView.LayoutManager layoutManager;
-    ScoresAdapter scoresAdapter;
-    List<Score> scores;
+
+    private RecyclerView.LayoutManager layoutManager;
+    private ScoresAdapter scoresAdapter;
+    private static List<Score> scores;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        scores = new ArrayList<>();
+        scores = new ArrayList<Score>();
 
         viewRoot = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, viewRoot);
@@ -67,6 +70,13 @@ public class HistoryFragment extends FragmentSwitcher {
                                         map.get(PLAYER_AVATAR));
                 scores.add(score);
             }
+
+            Collections.sort(scores);
+
+            for (int i = 0; i < scores.size(); i ++) {
+                scores.get(i).setId(String.valueOf(i + 1));
+            }
+
             scoresAdapter.notifyDataSetChanged();
         }
 

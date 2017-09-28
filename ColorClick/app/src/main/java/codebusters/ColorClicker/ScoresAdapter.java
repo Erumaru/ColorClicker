@@ -45,6 +45,7 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ViewHolder
         Score score = scores.get(position);
         holder.playerName.setText(score.getName());
         holder.playerScores.setText(score.getScores());
+        holder.playerPlace.setText(score.getId());
 
         if (score.getPhotoUrl() != Score.EMPTY_AVATAR) {
             GlideApp.with(fragment.getActivity())
@@ -67,6 +68,8 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ViewHolder
         TextView playerName;
         @BindView(R.id.playerScores)
         TextView playerScores;
+        @BindView(R.id.playerPlace)
+        TextView playerPlace;
 
         public ViewHolder(View itemView) {
             super(itemView);
